@@ -1,6 +1,5 @@
 LEXFILE=$(shell find ./script -type f -name '*.l')
 GRAMFILE=$(shell find ./script -type f -name '*.y')
-
 #we will begin a new project here, but we don't wanna rewrite some of the functions, so we just write it here
 lex: $(LEXFILE) generated $(GRAMFILE)
 	bison -o generated/grammar.cpp -d $(GRAMFILE) 
@@ -9,7 +8,8 @@ lex: $(LEXFILE) generated $(GRAMFILE)
 
 test: lex
 	$(CXX) generated/lex.o -ll -o ./generated/lex
-	cat testCase | ./generated/lex
+	sh ./script/LexTest.sh ./test_case/ ./generated/lex
+	echo $?
 
 generated:
 	mkdir generated
